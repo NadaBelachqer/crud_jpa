@@ -15,8 +15,9 @@
             <property name="jakarta.persistence.jdbc.driver"
                       value="com.mysql.cj.jdbc.Driver"/>
 
+          
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://mysql.railway.internal:3306/railway?useSSL=true&allowPublicKeyRetrieval=true"/>
+                      value="jdbc:mysql://mysql.railway.internal:3306/railway?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
 
             <property name="jakarta.persistence.jdbc.user"
                       value="root"/>
