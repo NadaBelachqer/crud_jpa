@@ -5,22 +5,35 @@
 <h:head>
 
     <title>Gestion des Utilisateurs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
 
 </h:head>
+
 
 <h:body class="container mt-5">
 
     <h1 class="text-center mb-4">Gestion des Utilisateurs</h1>
 
     <h:messages globalOnly="true" styleClass="alert alert-info"/>
+
     <h:form>
+
         <div class="card shadow">
+
             <div class="card-header bg-dark text-white">
                 Liste des utilisateurs
             </div>
+
             <div class="card-body">
-                <h:dataTable value="#{userBean.userList}" var="u" styleClass="table table-striped table-hover">
+
+                <h:dataTable id="userTable"
+                             value="#{userBean.userList}"
+                             var="u"
+                             styleClass="table table-striped table-hover">
+
+                    <!-- NOM -->
 
                     <h:column>
                         <f:facet name="header">Nom</f:facet>
@@ -30,12 +43,16 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
-                            <h:inputText value="#{userBean.selectedUser.nom}"
-                                         styleClass="form-control"/>
+                            <h:inputText value="#{userBean.selectedUser.nom}" styleClass="form-control"/>
                         </h:panelGroup>
 
                     </h:column>
+
+
+                    <!-- PRENOM -->
+
                     <h:column>
+
                         <f:facet name="header">Prenom</f:facet>
 
                         <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
@@ -43,11 +60,16 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
-                            <h:inputText value="#{userBean.selectedUser.prenom}"
-                                         styleClass="form-control"/>
+                            <h:inputText value="#{userBean.selectedUser.prenom}" styleClass="form-control"/>
                         </h:panelGroup>
+
                     </h:column>
+
+
+                    <!-- GENRE -->
+
                     <h:column>
+
                         <f:facet name="header">Genre</f:facet>
 
                         <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
@@ -55,51 +77,143 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
-                            <h:selectOneMenu value="#{userBean.selectedUser.genre}"
-                                             styleClass="form-select">
+
+                            <h:selectOneMenu value="#{userBean.selectedUser.genre}" styleClass="form-select">
 
                                 <f:selectItem itemLabel="Femme" itemValue="Femme"/>
                                 <f:selectItem itemLabel="Homme" itemValue="Homme"/>
 
                             </h:selectOneMenu>
+
                         </h:panelGroup>
 
                     </h:column>
 
 
+                    <!-- DATE -->
+
                     <h:column>
+
                         <f:facet name="header">Date</f:facet>
 
                         <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
+
                             <h:outputText value="#{u.datebirth}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
+
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
-                            <h:inputText value="#{userBean.selectedUser.datebirth}"
-                                         styleClass="form-control">
+
+                            <h:inputText value="#{userBean.selectedUser.datebirth}" styleClass="form-control">
+
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
+
                             </h:inputText>
+
                         </h:panelGroup>
 
                     </h:column>
 
 
+                    <!-- EMAIL -->
+
                     <h:column>
+
                         <f:facet name="header">Email</f:facet>
 
-                        <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">#{u.email}
+                        <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
+                            #{u.email}
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
                             <h:inputText value="#{userBean.selectedUser.email}" styleClass="form-control"/>
                         </h:panelGroup>
+
                     </h:column>
+
+
+                    <!-- CURRENCY -->
+
                     <h:column>
-                        <h:commandButton value="Modifier" action="#{userBean.selectUser(u)}" styleClass="btn btn-warning btn-sm" rendered="#{!userBean.editMode}" immediate="true"/>
-                        <h:commandButton value="Save" action="#{userBean.updateUser}" styleClass="btn btn-success btn-sm" rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}"/>
-                        <h:commandButton value="Supprimer" action="#{userBean.deleteUser(u)}" styleClass="btn btn-danger btn-sm" immediate="true"/>
+
+                        <f:facet name="header">Currency</f:facet>
+
+                        <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
+                            #{u.currency}
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
+
+                            <h:selectOneMenu value="#{userBean.selectedUser.currency}" styleClass="form-select">
+
+                                <f:selectItem itemLabel="EUR" itemValue="EUR"/>
+                                <f:selectItem itemLabel="USD" itemValue="USD"/>
+                                <f:selectItem itemLabel="DH" itemValue="DH"/>
+
+                            </h:selectOneMenu>
+
+                        </h:panelGroup>
+
+                    </h:column>
+
+
+                    <!-- BOURSE CORRIGÉE -->
+
+                    <h:column>
+
+                        <f:facet name="header">Bourse</f:facet>
+
+                        <h:panelGroup rendered="#{!userBean.editMode or userBean.selectedUser.id != u.id}">
+
+                            <h:outputText value="#{u.bourse}">
+
+                                <f:converter converterId="bourseConverter"/>
+
+                                <f:attribute name="currency" value="#{u.currency}"/>
+
+                            </h:outputText>
+
+                            #{u.currency}
+
+                        </h:panelGroup>
+
+
+                        <h:panelGroup rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}">
+
+                            <h:inputText value="#{userBean.selectedUser.bourse}" styleClass="form-control">
+
+                                <f:converter converterId="bourseConverter"/>
+
+                                <f:attribute name="currency" value="#{userBean.selectedUser.currency}"/>
+
+                            </h:inputText>
+
+                        </h:panelGroup>
+
+                    </h:column>
+
+
+                    <!-- ACTIONS -->
+
+                    <h:column>
+
+                        <h:commandButton value="Modifier"
+                                         action="#{userBean.selectUser(u)}"
+                                         styleClass="btn btn-warning btn-sm"
+                                         rendered="#{!userBean.editMode}"
+                                         immediate="true"/>
+
+                        <h:commandButton value="Save"
+                                         action="#{userBean.updateUser}"
+                                         styleClass="btn btn-success btn-sm"
+                                         rendered="#{userBean.editMode and userBean.selectedUser.id == u.id}"/>
+
+                        <h:commandButton value="Supprimer"
+                                         action="#{userBean.deleteUser(u)}"
+                                         styleClass="btn btn-danger btn-sm"
+                                         immediate="true"/>
 
                     </h:column>
 
@@ -109,55 +223,121 @@
         </div>
 
     </h:form>
+
+
     <br/><br/>
+
+
     <h:form>
 
         <div class="card shadow">
-
-            <div class="card-header bg-primary text-white">
-                Ajouter Utilisateur
+            <div class="card-header bg-primary text-white">Ajouter Utilisateur
             </div>
-
             <div class="card-body">
-
                 <div class="mb-3">
                     <label class="form-label">Nom</label>
-                    <h:inputText value="#{userBean.user.nom}" required="true" requiredMessage="Nom obligatoire" styleClass="form-control"/>
-                    <h:message for="nom" styleClass="text-danger"/>
+                    <h:inputText id="nom" value="#{userBean.user.nom}" required="true" requiredMessage="Nom obligatoire" validatorMessage="Nom invalide" styleClass="form-control">
+                        <f:validateRegex pattern="^[A-Za-z]+$"/>
+                    </h:inputText>
+                    <h:message for="nom" style="color:red"/>
+
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Prenom</label>
-                    <h:inputText value="#{userBean.user.prenom}" required="true" requiredMessage="Prenom obligatoire" styleClass="form-control"/>
+                    <h:inputText id="prenom" value="#{userBean.user.prenom}" required="true" requiredMessage="Prenom obligatoire" validatorMessage="Prenom invalide" styleClass="form-control">
+                        <f:validateRegex pattern="^[A-Za-z]+$"/>
+                    </h:inputText>
+                    <h:message for="prenom" style="color:red"/>
+
                 </div>
 
                 <div class="mb-3">
+
                     <label class="form-label">Genre</label>
+
                     <h:selectOneMenu value="#{userBean.user.genre}" styleClass="form-select">
+
                         <f:selectItem itemLabel="Choisir" itemValue=""/>
                         <f:selectItem itemLabel="Femme" itemValue="Femme"/>
                         <f:selectItem itemLabel="Homme" itemValue="Homme"/>
+
                     </h:selectOneMenu>
+
                 </div>
+
+
+
                 <div class="mb-3">
+
                     <label class="form-label">Date naissance</label>
-                    <h:inputText value="#{userBean.user.datebirth}" styleClass="form-control">
+                    <h:inputText id="date" value="#{userBean.user.datebirth}" required="true" requiredMessage="Date obligatoire" styleClass="form-control">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:inputText>
+
+                    <h:message for="date" style="color:red"/>
+
                 </div>
+
+
                 <div class="mb-3">
+
                     <label class="form-label">Email</label>
-                    <h:inputText value="#{userBean.user.email}" required="true" requiredMessage="Email obligatoire" validatorMessage="Email invalide" styleClass="form-control">
-                        <f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$"/>
+
+                    <h:inputText id="email"
+                                 value="#{userBean.user.email}"
+                                 required="true"
+                                 requiredMessage="Email obligatoire"
+                                 validatorMessage="Email invalide"
+                                 styleClass="form-control">
+
+                        <f:validateRegex pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"/>
+
                     </h:inputText>
+
+                    <h:message for="email" style="color:red"/>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">Mot de passe</label>
+
+                    <h:inputSecret id="password" value="#{userBean.user.motdepasse}" required="true" requiredMessage="Mot de passe obligatoire" styleClass="form-control"/>
+                    <h:message for="password" style="color:red"/>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">Currency</label>
+
+                    <h:selectOneMenu value="#{userBean.user.currency}" styleClass="form-select">
+
+                        <f:selectItem itemLabel="EUR" itemValue="EUR"/>
+                        <f:selectItem itemLabel="USD" itemValue="USD"/>
+                        <f:selectItem itemLabel="DH" itemValue="DH"/>
+
+                    </h:selectOneMenu>
 
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Mot de passe</label>
-                    <h:inputSecret value="#{userBean.user.motdepasse}" required="true" requiredMessage="Mot de passe obligatoire" styleClass="form-control"/>
+
+                    <label class="form-label">Bourse</label>
+
+                    <h:inputText id="bourse" value="#{userBean.user.bourse}" required="true" requiredMessage="Bourse obligatoire" styleClass="form-control">
+                        <f:converter converterId="bourseConverter"/>
+                        <f:attribute name="currency" value="#{userBean.user.currency}"/>
+                    </h:inputText>
+                    <h:message for="bourse" style="color:red"/>
                 </div>
                 <h:commandButton value="Ajouter" action="#{userBean.addUser}" styleClass="btn btn-success"/>
+
             </div>
         </div>
+
     </h:form>
+
 </h:body>
 </html>

@@ -28,7 +28,7 @@ public class UserBean implements Serializable {
     }
 
     public void loadUsers() {
-        userList = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        userList = em.createQuery("select u from User u", User.class).getResultList();
     }
 
     public void addUser() {
@@ -37,8 +37,9 @@ public class UserBean implements Serializable {
         em.getTransaction().commit();
         user = new User();
         loadUsers();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Utilisateur ajouté"));
     }
+
+
 
     public void deleteUser(User u) {
         em.getTransaction().begin();
@@ -63,6 +64,8 @@ public class UserBean implements Serializable {
         loadUsers();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Utilisateur modifié"));
     }
+
+
 
     public User getUser() {
         return user;
